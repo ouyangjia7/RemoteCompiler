@@ -1,0 +1,134 @@
+{
+    "name": "remotecompiler",
+    "displayName": "RemoteCompiler",
+    "description": "A tool for remote compile, by rsync,ssh etc.",
+    "version": "0.0.1",
+    "publisher": "Plus",
+    "engines": {
+        "vscode": "^1.28.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "RemoteCompile.Execute",
+                "title": "Remote Compile"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "RemoteCompiler configuration",
+            "properties": {
+                "remotecompiler.rsync": {
+                    "type": "string",
+                    "default": "/bin/rsync",
+                    "description": "must, The rsync executable"
+                },
+                "remotecompiler.ssh": {
+                    "type": "string",
+                    "default": "/bin/ssh",
+                    "description": "must, The ssh executable"
+                },
+                "remotecompiler.shell": {
+                    "type": "string",
+                    "default": "/bin/ssh -p",
+                    "description": "must, Rsync's -rsh option e.g. ssh -p"
+                },
+                "remotecompiler.cygpath":{
+                    "type": "string",
+                    "default": "D:\\cygwin\\bin\\cygpath.exe",
+                    "description": "conditional, If using cygwin, optional path to cygpath"
+                },
+                "remotecompiler.executableShell": {
+                    "type": "string",
+                    "default": "D:\\cygwin\\bin\\bash.exe",
+                    "description": "The executable shell to run rsync in"
+                },
+                "remotecompiler.project_name": {
+                    "type": "string",
+                    "default": "project_name",
+                    "description": "Name of project"
+                },
+                "remotecompiler.local_path": {
+                    "type": "string",
+                    "default": "default local path",
+                    "description": "Local location defaults to workspace (must end in path separator)"
+                },
+                "remotecompiler.remote_port": {
+                    "type": "string",
+                    "default": "22",
+                    "description": "ssh port"
+                },
+                "remotecompiler.remote_host": {
+                    "type": "string",
+                    "default": "xxx@0.0.0.0",
+                    "description": "Remote location (user@host)"
+                },
+                "remotecompiler.remote_path": {
+                    "type": "string",
+                    "default": "remote path",
+                    "description": "Remote location (path) (must end in path separator)"
+                },
+                "remotecompiler.remote_port_bk": {
+                    "type": "string",
+                    "default": "22",
+                    "description": "conditional, ssh port backup, is_use_remote_backup = 1"
+                },
+                "remotecompiler.remote_host_bk": {
+                    "type": "string",
+                    "default": "xxx@0.0.0.0",
+                    "description": "conditional, Remote location (user@host) backup, is_use_remote_backup = 1"
+                },
+                "remotecompiler.remote_path_bk": {
+                    "type": "string",
+                    "default": "remote path",
+                    "description": "conditional, Remote location (path) (must end in path separator) backup, is_use_remote_backup = 1"
+                },
+                "remotecompiler.reg_exp":{
+                    "type": "string",
+                    "default": "^(.*):([0-9]*): (.*error:)(.*)$",
+                    "description": "must, RegExp for gcc"
+                },
+                "remotecompiler.makefilepath": {
+                    "type": "string",
+                    "default": "service",
+                    "description": "optional, make command"
+                },
+                "remotecompiler.excutecmd": {
+                    "type": "string",
+                    "default": "make -j8",
+                    "description": "optional, make command"
+                },
+                "remotecompiler.is_use_remote_backup": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "use backup remote config"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.21",
+        "tslint": "^5.8.0",
+        "@types/node": "^8.10.25",
+        "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "@types/rsync": "^0.4.30",
+        "rsync": "^0.6.1"
+    }
+}
